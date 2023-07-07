@@ -21,11 +21,11 @@ body{
     height: 960px;
     width: 960px;
     background-color: black;
+    border: 1px solid black;
 }
 
 #container > div{
     background-color: white;
-    border: 1px solid black;
 }
 
 #newGrid{

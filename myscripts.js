@@ -20,7 +20,7 @@ button.addEventListener('click', () => {
 function drawGrid(size){
     for(let i = 0; i < size*size; i++){
         let div = document.createElement('div');
-        div.style.flex = `1 0 calc(100%/${size})`
+        div.style.flex = `1 0 calc(100%/${size})` // set flex basis(width) equal for every div
         container.appendChild(div);
     }
 }
@@ -28,3 +28,13 @@ function drawGrid(size){
 function deleteGrid(){
     container.replaceChildren();
 }
+
+let R = G = B = 0;
+
+container.addEventListener('mouseover', (e) => {
+    R = Math.floor(Math.random() * 256);
+    G = Math.floor(Math.random() * 256);
+    B = Math.floor(Math.random() * 256);
+    e.target.style.backgroundColor = `rgb(${R}, ${G}, ${B})`;
+    e.stopPropagation();
+});
