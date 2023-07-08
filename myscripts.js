@@ -1,8 +1,11 @@
 let container = document.querySelector('#container');
 let newGridButton = document.querySelector('#newGrid');
 let clearGridButton = document.querySelector('#clearGrid');
+let rgbModeButton = document.querySelector('#rgbMode');
+let bnwModeButton = document.querySelector('#bnwMode');
 
-let size = 32;
+let size = 4;
+drawModeRGB = true;
 drawGrid(size);
 
 newGridButton.addEventListener('click', () => {
@@ -17,15 +20,32 @@ newGridButton.addEventListener('click', () => {
     drawGrid(size); // draw the new grid
 });
 
-clearGridButton.addEventListener('click', () => {
+clearGridButton.addEventListener('click', clearGrid);
+
+rgbModeButton.addEventListener('click', () => {
+    if(!drawModeRGB){
+        clearGrid();// clear grid
+        drawModeRGB = true;
+    }
+});
+
+bnwModeButton.addEventListener('click', () => {
+    if(drawModeRGB){
+        clearGrid();// clear grid
+        drawModeRGB = false;
+    }
+});
+
+function clearGrid(){
     let children = container.childNodes;
     children.forEach((div) => div.style.backgroundColor = `rgb(255, 255, 255)`);
-});
+}
 
 function drawGrid(size){
     for(let i = 0; i < size*size; i++){
         let div = document.createElement('div');
         div.style.flex = `1 0 calc(100%/${size})` // set flex basis(width) equal for every div
+        div.style.backgroundColor = `rgb(255, 255, 255)`;
         container.appendChild(div);
     }
 }
@@ -34,12 +54,39 @@ function deleteGrid(){
     container.replaceChildren();
 }
 
-let R = G = B = 0;
-
 container.addEventListener('mouseover', (e) => {
-    R = Math.floor(Math.random() * 256);
-    G = Math.floor(Math.random() * 256);
-    B = Math.floor(Math.random() * 256);
-    e.target.style.backgroundColor = `rgb(${R}, ${G}, ${B})`;
+    e.target.style.backgroundColor = draw(drawModeRGB, e);
     e.stopPropagation();
 });
+
+let R = G = B = 0;
+
+function draw(rgb, e){
+    if(rgb){
+        R = Math.floor(Math.random() * 256);
+        G = Math.floor(Math.random() * 256);
+        B = Math.floor(Math.random() * 256);
+    } else{
+        let color = e.target.style.backgroundColor;
+
+        color = color.split(','); // extract the individual RGB colors
+        R = Number(color[0].substring(4)); // from the rgb(r, g, b) formatted string
+        G = Number(color[1].substring(1, 4));
+        B = Number(color[2].substring(1, 4));
+
+        setTimeout(() => {
+            console.log("Delayed for 30ms.");
+          }, 30);
+          
+        console.log(`R ${R}, G ${G}, B ${B}`);
+
+        R = R - 255/10;
+        G = G - 255/10;
+        B = B - 255/10;
+
+        if(R<0, G<0, B<0){
+            R = G = B = 0;
+        }
+    }
+    return `rgb(${R}, ${G}, ${B})`;
+}
