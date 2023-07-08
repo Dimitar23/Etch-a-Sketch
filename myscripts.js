@@ -1,11 +1,11 @@
 let container = document.querySelector('#container');
-let button = document.querySelector('#newGrid');
+let newGridButton = document.querySelector('#newGrid');
+let clearGridButton = document.querySelector('#clearGrid');
 
-let size = 16;
-
+let size = 32;
 drawGrid(size);
 
-button.addEventListener('click', () => {
+newGridButton.addEventListener('click', () => {
     size = Number(window.prompt('Enter a new size for the grid', `${size}`));
     if(size>128){
         size = 64;
@@ -15,6 +15,11 @@ button.addEventListener('click', () => {
         deleteGrid(); // delete all the children from the container
     }
     drawGrid(size); // draw the new grid
+});
+
+clearGridButton.addEventListener('click', () => {
+    let children = container.childNodes;
+    children.forEach((div) => div.style.backgroundColor = `rgb(255, 255, 255)`);
 });
 
 function drawGrid(size){

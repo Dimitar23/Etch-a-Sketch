@@ -28,7 +28,12 @@ body{
     background-color: white;
 }
 
-#newGrid{
+#buttonContainer{
+    display: flex;
+    gap: 16px;
+}
+
+button {
     padding: 5px;
     margin-top: 15px;
     background-color: aquamarine;
