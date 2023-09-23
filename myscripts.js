@@ -70,13 +70,9 @@ function draw(rgb, e){
         let color = e.target.style.backgroundColor;
 
         color = color.split(','); // extract the individual RGB colors
-        R = Number(color[0].substring(4)); // from the rgb(r, g, b) formatted string
-        G = Number(color[1].substring(1, 4));
-        B = Number(color[2].substring(1, 4));
-
-        setTimeout(() => {
-            console.log("Delayed for 30ms.");
-          }, 30);
+        R = +color[0].replace(/[^0-9]/g, ''); // replace non digits with empty string
+        G = +color[1].replace(/[^0-9]/g, ''); // essentialy deletes non digits
+        B = +color[2].replace(/[^0-9]/g, '');
           
         console.log(`R ${R}, G ${G}, B ${B}`);
 
